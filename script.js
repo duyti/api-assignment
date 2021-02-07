@@ -1,9 +1,13 @@
 const searchBtn = document.getElementById("search-button");
 searchBtn.addEventListener("click", () => {
+
+    // cleaning previous results
     document.getElementById("search-result-block").innerHTML = "";
     document.getElementById("recipe-block").innerHTML = "";
+
     const searchKey = document.getElementById("search-input");
-    if (searchKey.value != "") {
+
+    if (searchKey.value != "") {                        // check for empty input
         fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchKey.value}`)
             .then(response => response.json())
             .then(data => displayResults(data.meals))
@@ -24,7 +28,7 @@ const displayResults = meals => {
     }
 }
 
-function showError(msg) {
+const showError = msg => {
     const errorBlock = document.createElement("div");
     const errorMsg = document.createElement("h2");
     errorBlock.className = "text-center";
@@ -35,9 +39,9 @@ function showError(msg) {
     addNewElement("search-result-block", errorBlock);
 }
 
-function showResult(mealName, mealImgUrl, mealId) {
+const showResult = (mealName, mealImgUrl, mealId) => {
     const cardDiv = document.createElement("div");
-    cardDiv.className = "col-4 mb-3";
+    cardDiv.className = "col-3 mb-3";
     cardDiv.innerHTML = `<div id="${mealId}" class="card h-100" style="cursor: pointer;" onclick="displayRecipe(${mealId})">
                             <img src="${mealImgUrl}" class="card-img-top" alt="">
                             <div class="card-body">
@@ -62,8 +66,8 @@ const displayRecipe = mealId => {
 
             const cardBody = document.createElement('div');
             cardBody.className = "card-body";
-            const oLists = document.createElement('ol');
-            oLists.style = "list-style-type: upper-roman;";
+            const ingredientList = document.createElement('ol');
+            ingredientList.style = "list-style-type: upper-roman;";
             cardBody.innerHTML = `<h6 class="card-text">Ingredients :</h6>`;
 
             let i = 1;
@@ -71,10 +75,10 @@ const displayRecipe = mealId => {
                 const ingredient = meal[`strMeasure${i}`] + " " + meal[`strIngredient${i}`];
                 const list = document.createElement('li');
                 list.innerText = ingredient;
-                oLists.appendChild(list);
+                ingredientList.appendChild(list);
                 i++;
             }
-            cardBody.appendChild(oLists);
+            cardBody.appendChild(ingredientList);
             cardBody.innerHTML += `<hr><h6 class="card-text">Method:</h6>
                                     <p class="card-text">${meal.strInstructions}</p>`;
 
