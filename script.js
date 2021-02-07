@@ -1,4 +1,3 @@
-const clog = console.log;
 const searchBtn = document.getElementById("search-button");
 searchBtn.addEventListener("click", () => {
     document.getElementById("search-result-block").innerHTML = "";
@@ -56,9 +55,6 @@ const displayRecipe = mealId => {
         .then(data => {
             const meal = data.meals[0];
 
-            clog(meal);
-            // clog("################", );
-
             const recipeCard = document.createElement("div");
             recipeCard.className = "card";
             recipeCard.innerHTML = `<div class="card-header">${meal.strMeal}</div>
@@ -76,7 +72,6 @@ const displayRecipe = mealId => {
                 const list = document.createElement('li');
                 list.innerText = ingredient;
                 oLists.appendChild(list);
-                clog(list);
                 i++;
             }
             cardBody.appendChild(oLists);
@@ -85,14 +80,10 @@ const displayRecipe = mealId => {
 
             recipeCard.appendChild(cardBody);
 
-            // <div class="card-body">
-            //     <p class="card-text" >${meal.strInstructions}</p>
-            // </div>
-
-
             addNewElement("recipe-block", recipeCard);
         })
 
+    document.documentElement.scrollTop = 0;
 }
 
 const addNewElement = (parentId, child) => {
