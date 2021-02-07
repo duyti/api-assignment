@@ -39,7 +39,7 @@ function showError(msg) {
 function showResult(mealName, mealImgUrl, mealId) {
     const cardDiv = document.createElement("div");
     cardDiv.className = "col-4 mb-3";
-    cardDiv.innerHTML = `<div id="${mealId}" class="card" style="cursor: pointer;" onclick="displayRecipe(${mealId})">
+    cardDiv.innerHTML = `<div id="${mealId}" class="card h-100" style="cursor: pointer;" onclick="displayRecipe(${mealId})">
                             <img src="${mealImgUrl}" class="card-img-top" alt="">
                             <div class="card-body">
                                 <h4 class="card-title">${mealName}</h4>
@@ -49,16 +49,54 @@ function showResult(mealName, mealImgUrl, mealId) {
 }
 
 const displayRecipe = mealId => {
+    document.getElementById("recipe-block").innerHTML = "";
+
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`)
         .then(response => response.json())
         .then(data => {
-            clog(data.meals[0]);
+            const meal = data.meals[0];
+
+            clog(meal);
+            // clog("################", );
+
+            const recipeCard = document.createElement("div");
+            recipeCard.className = "card";
+            recipeCard.innerHTML = `<div class="card-header">${meal.strMeal}</div>
+                        <img src="${meal.strMealThumb}" class="card-img-top" alt="">`;
+
+            const cardBody = document.createElement('div');
+            cardBody.className = "card-body";
+            const oLists = document.createElement('ol');
+            oLists.style = "list-style-type: upper-roman;";
+            cardBody.innerHTML = `<h6 class="card-text">Ingredients :</h6>`;
+
+            let i = 1;
+            while (meal[`strIngredient${i}`] != "") {
+                const ingredient = meal[`strMeasure${i}`] + " " + meal[`strIngredient${i}`];
+                const list = document.createElement('li');
+                list.innerText = ingredient;
+                oLists.appendChild(list);
+                clog(list);
+                i++;
+            }
+            cardBody.appendChild(oLists);
+            cardBody.innerHTML += `<hr><h6 class="card-text">Method:</h6>
+                                    <p class="card-text">${meal.strInstructions}</p>`;
+
+            recipeCard.appendChild(cardBody);
+
+            // <div class="card-body">
+            //     <p class="card-text" >${meal.strInstructions}</p>
+            // </div>
+
+
+            addNewElement("recipe-block", recipeCard);
         })
 
 }
 
-const addNewElement = (parentName, child) => {
-    const parent = document.getElementById(parentName);
+const addNewElement = (parentId, child) => {
+    const parent = document.getElementById(parentId);
     parent.appendChild(child);
 }
 
