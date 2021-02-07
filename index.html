@@ -11,14 +11,21 @@
 </head>
 
 <body>
-    <main class="container mt-5">
-        <div class="form-outline m-5 p-5">
-            <input type="search" id="search-box" class="form-control" placeholder="Search for Meal" aria-label="Search">
+    <main class="container">
+        <div class="input-group mb-3 p-5">
+            <input type="text" id="search-input" class="form-control" placeholder="Search for Meal" aria-label="Search"
+                aria-describedby="search-button">
+            <button class="btn btn-outline-primary" type="button" id="search-button">SEARCH</button>
         </div>
 
-        <div class="container-recipe"></div>
+        <div class="row">
+            <div id="search-result" class="col-8 order-first m-1">
+                <div id="search-result-block" class="row"></div>
+            </div>
 
-        <div class="container-search-results"></div>
+            <div id="recipe-block" class="col-4 order-last m-1"></div>
+        </div>
+
     </main>
 
     <script src="script.js"></script>
