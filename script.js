@@ -90,6 +90,3 @@ const addNewElement = (parentId, child) => {
     const parent = document.getElementById(parentId);
     parent.appendChild(child);
 }
-
-
-//  add EventListener from parent to all child
