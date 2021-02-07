@@ -10,7 +10,7 @@ searchBtn.addEventListener("click", () => {
     if (searchKey.value != "") {                        // check for empty input
         fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchKey.value}`)
             .then(response => response.json())
-            .then(data => displayResults(data.meals))
+            .then(data => displayResults(data.meals))   // send results to display
     }
     else {
         showError("Write something");
@@ -18,8 +18,8 @@ searchBtn.addEventListener("click", () => {
 });
 
 const displayResults = meals => {
-    if (meals) {
-        meals.forEach(meal => {
+    if (meals) {                // for matching meals
+        meals.forEach(meal => { // for each result
             showResult(meal.strMeal, meal.strMealThumb, meal.idMeal);
         })
     }
@@ -28,6 +28,7 @@ const displayResults = meals => {
     }
 }
 
+// show input error message
 const showError = msg => {
     const errorBlock = document.createElement("div");
     const errorMsg = document.createElement("h2");
@@ -39,6 +40,7 @@ const showError = msg => {
     addNewElement("search-result-block", errorBlock);
 }
 
+// create card to show result
 const showResult = (mealName, mealImgUrl, mealId) => {
     const cardDiv = document.createElement("div");
     cardDiv.className = "col-3 mb-3";
@@ -51,6 +53,7 @@ const showResult = (mealName, mealImgUrl, mealId) => {
     addNewElement("search-result-block", cardDiv);
 }
 
+// search and display recipe
 const displayRecipe = mealId => {
     document.getElementById("recipe-block").innerHTML = "";
 
@@ -71,7 +74,7 @@ const displayRecipe = mealId => {
             cardBody.innerHTML = `<h6 class="card-text">Ingredients :</h6>`;
 
             let i = 1;
-            while (meal[`strIngredient${i}`] != "") {
+            while (meal[`strIngredient${i}`] != "") {       // adding ingredients until no more
                 const ingredient = meal[`strMeasure${i}`] + " " + meal[`strIngredient${i}`];
                 const list = document.createElement('li');
                 list.innerText = ingredient;
@@ -87,9 +90,10 @@ const displayRecipe = mealId => {
             addNewElement("recipe-block", recipeCard);
         })
 
-    document.documentElement.scrollTop = 0;
+    document.documentElement.scrollTop = 0;     // scroll to the top to see recipe
 }
 
+// add new child to parent element
 const addNewElement = (parentId, child) => {
     const parent = document.getElementById(parentId);
     parent.appendChild(child);
