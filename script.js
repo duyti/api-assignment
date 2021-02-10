@@ -64,7 +64,7 @@ const displayRecipe = mealId => {
 
             const recipeCard = document.createElement("div");
             recipeCard.className = "card";
-            recipeCard.innerHTML = `<div class="card-header">${meal.strMeal}</div>
+            recipeCard.innerHTML = `<div class="card-header"><h3>${meal.strMeal}</h3></div>
                         <img src="${meal.strMealThumb}" class="card-img-top" alt="">`;
 
             const cardBody = document.createElement('div');
